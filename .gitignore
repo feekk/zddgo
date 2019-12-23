@@ -1,0 +1,16 @@
+pkg/*
+bin/*
+.idea/
+*.DS_Store
+*.swp
+node_modules/
+out_put/
+.gitversion
+.version
+dbdata/
+dist/
+*.sum
+vendor/
+zddgo
+
+
