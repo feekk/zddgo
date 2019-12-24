@@ -3,7 +3,10 @@ package zddgo
 import(
 	"net/http"
 )
-
+func New() (z *Zddgo){
+	z = &Zddgo{}
+	return
+}
 type Zddgo struct{}
 func(z *Zddgo) InitConfig() (err error) {
 	err = ConfigInit()
