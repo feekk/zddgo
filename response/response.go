@@ -1,4 +1,4 @@
-package zddgo
+package response
 
 import(
 	"github.com/feekk/zddgo/validator"

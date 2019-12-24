@@ -1,4 +1,4 @@
-package zddgo
+package response
 
 import(
 	"net/http"
@@ -7,7 +7,7 @@ import(
 //Add(200, UPDATE_FAIL, "update fail", "update fail response")
 
 
-func AddResponseMessage(status, code int, message, desc string){
+func Add(status, code int, message, desc string){
 	rt := responseTemp{
 		status : status,
 		code : code,

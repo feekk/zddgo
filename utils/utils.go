@@ -1,4 +1,4 @@
-package zddgo
+package utlis
 
 
 import (
@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"runtime"
 	"github.com/gin-gonic/gin"
+	"github.com/feekk/zddgo/log"
 )
 
 func StdPrint(format string, values ...interface{}) {
@@ -18,7 +19,7 @@ func GoWithRecover(ctx *gin.Context, f reflect.Value, args ...interface{}){
 		if err := recover(); err != nil {
 			var buf [1024]byte
 			n := runtime.Stack(buf[:], false)
-			Error(ctx, TAG_Status_Internal_Server_Error, map[string]interface{}{
+			log.Error(ctx, log.TAG_Status_Internal_Server_Error, map[string]interface{}{
 				"err":   err,
 				"stack": string(buf[:n]),
 			})

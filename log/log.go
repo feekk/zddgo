@@ -1,4 +1,4 @@
-package zddgo
+package log
 
 import (
 	"fmt"
