@@ -34,7 +34,7 @@ func Recovery() gin.HandlerFunc {
 				stackByte, _ := json.Marshal(fmt.Sprintf("%s %s", string(request), string(stack)))
 
 				if brokenPipe {
-					log.Warning(ctx, log.TAG_Status_Internal_Server_BrokenPipe, map[string]interface{}{
+					log.Warn(ctx, log.TAG_Status_Internal_Server_BrokenPipe, map[string]interface{}{
 						"err":   err,
 						"stack": string(stackByte),
 					})
