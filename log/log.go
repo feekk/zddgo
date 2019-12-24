@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 	"context"
+	"github.com/feekk/zddgo/trace"
 )
 
 //public tag
@@ -37,7 +38,7 @@ func(l *logger) print(ctx context.Context, level, tag string, parameter map[stri
 	var traceId, spanId, content string
 	var rpcId int
 	//trace
-	if t := InheritContextTrace(ctx); t != nil{
+	if t := trace.InheritContextTrace(ctx); t != nil{
 		traceId, spanId, _, _, _, rpcId = t.Get()
 	}
 	// parameter
