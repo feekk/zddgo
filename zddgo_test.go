@@ -1,12 +1,18 @@
 package zddgo
 
 import(
+	"flag"
+	"runtime"
 	"testing"
 	"github.com/gin-gonic/gin"
 )
+func TestMain(t *testing.T){
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
-func TestZddgo(t *testing.T){
-	z := Zddgo{}
+	flag.Parse()
+
+	z := New()
+
 	if err := z.InitConfig(); err != nil{
 		panic(err)
 	}
@@ -16,8 +22,6 @@ func TestZddgo(t *testing.T){
 	if err := z.InitCache(); err != nil{
 		panic(err)
 	}
-
-	//gin.SetMode(Conf.EnvConf.GinMode)
 	engine := gin.New()
 	//engine.Use(middleware.Recovery(), middleware.Route())
 	engine.GET("/ping", func(c *gin.Context) {
