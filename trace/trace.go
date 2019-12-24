@@ -22,6 +22,14 @@ const (
 	_spandHead string = "zddgo-http-header-sid"	//span id
 	TraceContextKey string = "zddgo-trace" //context key
 )
+
+func GetTraceHeadKey() string{
+	return _traceHead
+}
+func GetSpandHeadKey() string{
+	return _spandHead
+}
+
 var (
 	_processId int = 0
 )
@@ -75,7 +83,6 @@ func InheritContextTrace(ctx context.Context) *Trace{
     }
     return nil
 }
-
 
 type Trace struct {
 	mu sync.Mutex
