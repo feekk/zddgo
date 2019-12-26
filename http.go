@@ -37,24 +37,31 @@ func NewHttpRequest(ctx context.Context) (c *HttpRequest){
 	c = &HttpRequest{
 		ctx : ctx,
 		client : &http.Client{},
+		header : make(http.Header),
 	}
 	return
 }
 type HttpRequest struct{
 	ctx context.Context
 	client *http.Client
+	header http.Header
 }
+func(r *HttpRequest) SetHeader(name, value string) {
+	r.header.Add(name, value)
+}
+
 func(r *HttpRequest) Get(url string)(resp *http.Response, err error){
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	return r.do(req)
 }
 func(r *HttpRequest) Post(url, contentType string, body io.Reader)(resp *http.Response, err error){
 	req, err := http.NewRequest(http.MethodPost, url, body)
-	req.Header.Set("Content-Type", contentType)
+	r.SetHeader("Content-Type", contentType)
 	return r.do(req)
 }
 func(r *HttpRequest) do(req *http.Request) (resp *http.Response, err error){
 	t := trace.InheritContextTrace(r.ctx)
+	req.Header = r.header.Clone()
 	if t != nil {
 		t.IncrRpc()
 		traceId, spanId, _, _, _, _ := t.Get()
