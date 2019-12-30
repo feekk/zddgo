@@ -18,7 +18,9 @@ type ValidFunction func(o interface{}, topStruct reflect.Value, value reflect.Va
 
 var ruleFuncMap = map[string]ValidFunction{
 	"required"	:	valueRequierd,
+	"lt"		:   numberIsLt,
 	"lte"		:	numberIsLte,
+	"gt"		:   numberIsGt,
 	"gte"		:	numberIsGte,
 	"eq"		:	valueIsEq,
 	"ne"		:   valueIsNe,
@@ -42,6 +44,34 @@ func valueRequierd(o interface{}, topStruct reflect.Value, value reflect.Value, 
 		return false
 	}
 	return true
+}
+
+func numberIsLt(o interface{}, topStruct reflect.Value, value reflect.Value, param string) bool{ 
+
+	switch value.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		p, err := strconv.ParseInt(param, 0, 64)
+		if err != nil {
+			return false
+		}
+		return value.Int() < p
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+		p, err := strconv.ParseUint(param, 0, 64)
+		if err != nil {
+			return false
+		}
+		return value.Uint() < p
+
+	case reflect.Float32, reflect.Float64:
+		p, err := strconv.ParseFloat(param, 64)
+		if err != nil {
+			return false
+		}
+		return value.Float() < p
+
+	default:
+		return false
+	}
 }
 
 func numberIsLte(o interface{}, topStruct reflect.Value, value reflect.Value, param string) bool{ 
@@ -71,7 +101,35 @@ func numberIsLte(o interface{}, topStruct reflect.Value, value reflect.Value, pa
 		return false
 	}
 }
+func numberIsGt(o interface{}, topStruct reflect.Value, value reflect.Value, param string) bool{ 
 
+	switch value.Kind() {
+
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		p, err := strconv.ParseInt(param, 0, 64)
+		if err != nil {
+			return false
+		}
+		return value.Int() > p
+
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
+		p, err := strconv.ParseUint(param, 0, 64)
+		if err != nil {
+			return false
+		}
+		return value.Uint() > p
+
+	case reflect.Float32, reflect.Float64:
+		p, err := strconv.ParseFloat(param, 64)
+		if err != nil {
+			return false
+		}
+		return value.Float() > p
+
+	default:
+		return false
+	}
+}
 func numberIsGte(o interface{}, topStruct reflect.Value, value reflect.Value, param string) bool{ 
 
 	switch value.Kind() {
